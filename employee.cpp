@@ -1,4 +1,3 @@
-// for employee logic and helper function
 
 #include <iostream>
 #include <string>
@@ -18,25 +17,29 @@ class EmployeeIdentity
 {
     private:
         int employee_id;
-        int government_id;
         Date date_of_hire;
 
     public:
-        EmployeeIdentity(int emp_id, int gov_id, Date date)
-            : employee_id(emp_id), government_id(gov_id), date_of_hire(date)
+        EmployeeIdentity(int emp_id, Date date)
+            : employee_id(emp_id), date_of_hire(date)
         {
             
+        }
+
+        // default constructor 
+        EmployeeIdentity(){};
+
+        // copy constructor 
+        EmployeeIdentity(EmployeeIdentity& emp_id)
+        {
+            employee_id = emp_id.employee_id;
+            date_of_hire = emp_id.date_of_hire;
         }
 
         // getter metnods 
         int get_employee_id() const
         {
             return employee_id;
-        }
-
-        int get_government_id() const 
-        {
-            return government_id;
         }
 
         Date get_date_of_hire() const
@@ -48,9 +51,9 @@ class EmployeeIdentity
 class EmployeeProfile
 {
     private:
-        mutable string department;
-        mutable long salary;
-        mutable string job_title;
+        string department;
+        long salary;
+        string job_title;
 
     public:
         EmployeeProfile(string dep, long sal, string job)
@@ -58,19 +61,30 @@ class EmployeeProfile
         {
         
         }
+        
+        // default constructor 
+        EmployeeProfile(){};
+
+        // copy function 
+        EmployeeProfile(EmployeeProfile& emp_prof)
+        {
+            department = emp_prof.department;
+            salary = emp_prof.salary;
+            job_title = emp_prof.job_title;
+        }
 
         // getter methods 
-        long get_salary() const
+        long get_salary() 
         {
             return salary;
         }
 
-        string get_department() const
+        string get_department() 
         {
             return department;
         }
 
-        string get_job_title() const
+        string get_job_title() 
         {
             return job_title;
         }
@@ -91,8 +105,62 @@ class EmployeeProfile
             job_title = job;
         }
 };
-// helper function to print a date 
 
+class Employee
+{
+    private:
+        string name;
+        int age;
+        EmployeeIdentity emp_id;
+        EmployeeProfile emp_profile;
+    public:
+        Employee(string _name, int _age, EmployeeIdentity _emp_id, EmployeeProfile _emp_profile)
+            : name(_name), age(_age), emp_id(_emp_id), emp_profile(_emp_profile)
+        {
+            
+        }
+
+        // getter methods 
+        string get_name()
+        {
+            return name;
+        }
+
+        int get_age()
+        {
+            return age;
+        }
+
+        int get_employee_id()
+        {
+            return emp_id.get_employee_id();
+        }
+
+        Date get_date_of_hire()
+        {
+            return emp_id.get_date_of_hire();
+        }
+
+        string get_department()
+        {
+            return emp_profile.get_department();
+        }
+
+        long get_salary()
+        {
+            return emp_profile.get_salary();
+        }
+
+        string get_job_title()
+        {
+            return emp_profile.get_job_title();
+        }
+
+        // setter methods
+        
+};
+
+// helper function to print a date 
 void print_date(Date date)
 {
     cout << date.day << "/" << date.month << "/" << date.year << std::endl;
