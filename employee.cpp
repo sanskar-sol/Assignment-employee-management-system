@@ -11,7 +11,11 @@ struct Date
     int year;
 };
 
-class Employee{};
+// helper function to print a date 
+void print_date(Date date)
+{
+    cout << date.day << "/" << date.month << "/" << date.year << std::endl;
+}
 
 class EmployeeIdentity
 {
@@ -55,6 +59,20 @@ class EmployeeProfile
         long salary;
         string job_title;
 
+        // valid amount function
+        bool is_valid_amount(int amount)
+        {
+            if(amount > 0)
+            {
+                return true;
+            }
+            else
+            {
+                cout << "Entered an invalid amount." << endl;
+                return false;
+            }
+        }
+
     public:
         EmployeeProfile(string dep, long sal, string job)
             : department(dep), salary(sal), job_title(job)
@@ -90,9 +108,20 @@ class EmployeeProfile
         }
 
         // setter methods
-        void set_salary(int sal)
+        void set_salary(long sal)
         {
-            salary = sal;
+            if (is_valid_amount(sal))
+            {
+                salary = sal;
+            }
+        }
+
+        void add_salary(long amount)
+        {
+            if (is_valid_amount(amount))
+            {
+                salary += amount;
+            }
         }
 
         void set_department(string dep)
@@ -146,7 +175,7 @@ class Employee
             return emp_profile.get_department();
         }
 
-        long get_salary()
+        long get_salary() 
         {
             return emp_profile.get_salary();
         }
@@ -157,15 +186,36 @@ class Employee
         }
 
         // setter methods
-        
+        void set_name(string _name)
+        {
+            name = _name;
+        }
+
+        void set_age(int _age)
+        {
+            age = _age;
+        }
+
+        void give_raise(long amount)
+        {
+            emp_profile.add_salary(amount);
+        }
+
+        void set_salary(long sal)
+        {
+            emp_profile.set_salary(sal);
+        }
+
+        void set_department(string dep)
+        {
+            emp_profile.set_department(dep);
+        }
+
+        void set_job_title(string job)
+        {
+            emp_profile.set_job_title(job);
+        }
 };
-
-// helper function to print a date 
-void print_date(Date date)
-{
-    cout << date.day << "/" << date.month << "/" << date.year << std::endl;
-}
-
 
 int main()
 {
