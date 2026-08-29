@@ -4,6 +4,17 @@
 #include <cstdlib>
 
 using namespace std;
+struct Date;
+void clear_screen();
+void print_date(Date);
+class Employee;
+class EmployeeId;
+class EmployeeProfile;
+
+int main()
+{
+    return 0;
+}
 
 struct Date
 {
@@ -47,7 +58,7 @@ class EmployeeIdentity
             date_of_hire = emp_id.date_of_hire;
         }
 
-        // getter metnods 
+        // getter methods 
         int get_employee_id() const
         {
             return employee_id;
@@ -223,8 +234,3 @@ class Employee
             emp_profile.set_job_title(job);
         }
 };
-
-int main()
-{
-    return 0;
-}
