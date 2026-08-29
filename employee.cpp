@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 using namespace std;
 
@@ -10,6 +11,12 @@ struct Date
     int month;
     int year;
 };
+
+// clearing terminal 
+void clear_screen()
+{
+    system("cls");
+}
 
 // helper function to print a date 
 void print_date(Date date)
