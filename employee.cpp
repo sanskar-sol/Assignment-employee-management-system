@@ -26,14 +26,9 @@ class EmployeeIdentity
         Date date_of_hire;
 
     public:
-        EmployeeIdentity(int emp_id, Date date)
+        EmployeeIdentity(int emp_id = 0, Date date = {0, 0, 0})
             : employee_id(emp_id), date_of_hire(date)
-        {
-            
-        }
-
-        // default constructor 
-        EmployeeIdentity(){};
+        {}
 
         // copy constructor 
         EmployeeIdentity(EmployeeIdentity& emp_id)
@@ -43,15 +38,8 @@ class EmployeeIdentity
         }
 
         // getter methods 
-        int get_employee_id() const
-        {
-            return employee_id;
-        }
-
-        Date get_date_of_hire() const
-        {
-            return date_of_hire;
-        }
+        int get_employee_id() const {return employee_id;}
+        Date get_date_of_hire() const {return date_of_hire;}
 };  
 
 class EmployeeProfile
@@ -76,14 +64,13 @@ class EmployeeProfile
         }
 
     public:
-        EmployeeProfile(string dep, long sal, string job)
+        EmployeeProfile(string dep = "Unknown", long sal = 0, string job = "Unknown")
             : department(dep), salary(sal), job_title(job)
         {
         
         }
         
-        // default constructor 
-        EmployeeProfile(){};
+
 
         // copy function 
         EmployeeProfile(EmployeeProfile& emp_prof)
@@ -94,20 +81,9 @@ class EmployeeProfile
         }
 
         // getter methods 
-        long get_salary() 
-        {
-            return salary;
-        }
-
-        string get_department() 
-        {
-            return department;
-        }
-
-        string get_job_title() 
-        {
-            return job_title;
-        }
+        long get_salary() {return salary;}
+        string get_department() {return department;}
+        string get_job_title() {return job_title;}
 
         // setter methods
         void set_salary(long sal)
@@ -140,58 +116,31 @@ class EmployeeProfile
 class Employee
 {
     private:
-        static int employee_count;
-        static int max_size;
+        static int count;
+        static const int max_size;
         string name;
         int age;
         EmployeeIdentity emp_id;
         EmployeeProfile emp_profile;
     public:
-        Employee(string _name, int _age, EmployeeIdentity _emp_id, EmployeeProfile _emp_profile)
+        Employee(string _name = "Unknown", int _age = 0, EmployeeIdentity _emp_id = EmployeeIdentity(), EmployeeProfile _emp_profile = EmployeeProfile())
             : name(_name), age(_age), emp_id(_emp_id), emp_profile(_emp_profile)
-        {
-            
-        }
+        {}
 
-        // default constructor
-        Employee(){};
+
         // getter methods 
-        string get_name()
-        {
-            return name;
-        }
-
-        int get_age()
-        {
-            return age;
-        }
-
-        int get_employee_id()
-        {
-            return emp_id.get_employee_id();
-        }
-
-        Date get_date_of_hire()
-        {
-            return emp_id.get_date_of_hire();
-        }
-
-        string get_department()
-        {
-            return emp_profile.get_department();
-        }
-
-        long get_salary() 
-        {
-            return emp_profile.get_salary();
-        }
-
-        string get_job_title()
-        {
-            return emp_profile.get_job_title();
-        }
+        string get_name() {return name;}
+        int get_age() {return age;}
+        int get_employee_id() {return emp_id.get_employee_id();}
+        Date get_date_of_hire() {return emp_id.get_date_of_hire();}
+        string get_department() {return emp_profile.get_department();}
+        long get_salary() {return emp_profile.get_salary();}
+        string get_job_title() {return emp_profile.get_job_title();}
+        static int get_count() {return count;}
 
         // setter methods
+        static void add_count() {count++;}
+        static void minus_count() {count--;}
         void set_name(string _name)
         {
             name = _name;
@@ -200,11 +149,6 @@ class Employee
         void set_age(int _age)
         {
             age = _age;
-        }
-
-        void give_raise(long amount)
-        {
-            emp_profile.add_salary(amount);
         }
 
         void set_salary(long sal)
@@ -221,16 +165,26 @@ class Employee
         {
             emp_profile.set_job_title(job);
         }
+
+        // printing information
+        void print_info()
+        {
+            cout << "Name: " << name << endl;
+            cout << "Age: " << age << endl;
+            cout << "Salary: " << this->get_salary() << endl;
+            cout << "Department: " << this->get_department() << endl;
+            cout << "Job_Title: " << this->get_job_title() << endl;
+        }
 };
 
-int Employee::employee_count = 0;
-int Employee::max_size = 20;
-
+int Employee::count = 0;
 
 int main()
 {
     int menu_index = 0;
+    const int max = 20;
     bool run  = true;
+    Employee e[max];
 
     while (run)
     {
@@ -242,6 +196,9 @@ int main()
         string tdep;
         long tsalary;
         string title;
+        int temp_count = Employee::get_count();
+        int temp_index;
+        bool found;
 
         switch(menu_index)
         {
@@ -249,20 +206,22 @@ int main()
                 clear_screen();
                 print_title("Employee Management System");
                 cout << "1. Add Employee" << endl;
-                cout << "2. Update Employee Information" << endl;
-                cout << "3. Find Employee Information" << endl;
+                cout << "2. Salary Management" << endl;
+                cout << "3. Print Employee Information" << endl;
                 cout << "4. Exit" << endl;
                 cout << "Enter your choice(Any other key to quit): ";
                 cin >> menu_index;
                 break;
             case 1:
-
+            {
                 clear_screen();
                 print_title("Adding Employee Information");
-                cout << "Enter Employee Name: ";
+                cout << "Enter Employee Name(No spaces): ";
                 cin >> tname;
                 cout << "Enter Employee Age: ";
                 cin >> tage;
+
+                // emp id
                 cout << "Enter Employee Id: ";
                 cin >> tempid;
                 cout << "Enter Date of Hire (Format-> dd mm yy): ";
@@ -270,15 +229,83 @@ int main()
                 cin >> m;
                 cin >> y;
                 tempdate = {d, m, y};
-                cout << "Enter the Department: ";
+                EmployeeIdentity temp_id(tempid, tempdate);
+
+                // emp profile
+                cout << "Enter the Department(No spaces): ";
                 cin >> tdep;
-                cout << "Enter the Job Title: ";
+                cout << "Enter the Job Title(No spaces): ";
                 cin >> title;
                 cout << "Enter the salary: ";
                 cin >> tsalary;
+                EmployeeProfile temp_profile(tdep, tsalary, title);
+                Employee temp_emp(tname, tage, temp_id, temp_profile);
+                
+                e[temp_count] = temp_emp;
+                Employee::add_count();
+                cout << "Employee Information Added" << endl;
+                cout << "\nEnter 0 to Main Menu or 4 to exit: " << endl;
+                cin >> menu_index;
                 break;
+            }
+            case 2:
+                clear_screen();
+                print_title("Salary Management");
+                cout << "Enter the EmployeeID: ";
+                cin >> tempid;
+                found = false;
+                // searching 
+                for (int i = 0, n = Employee::get_count(); i < n; i++)
+                {
+                    if (e[i].get_employee_id() == tempid)
+                    {
+                        found = true;
+                        cout << "Employee Found!\n" << endl;
+                        cout << "Name: " << e[i].get_name() << endl;
+                        cout << "Enter the new Salary: " << endl;
+                        cin >> tsalary;
+                        e[i].set_salary(tsalary);
+                        cout << "Salary Updated!" << endl;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    cout << "Employee Not Found" << endl;
+                }
+
+                cout << "\nEnter 0 to Main Menu or 4 to exit: " << endl;
+                cin >> menu_index;
+                break;
+            case 3:
+                clear_screen();
+                print_title("Print Employee Information");
+                cout << "Enter the EmployeeID: ";
+                cin >> tempid;
+                found = false;
+                // searching 
+                for (int i = 0, n = Employee::get_count(); i < n; i++)
+                {
+                    if (e[i].get_employee_id() == tempid)
+                    {
+                        found = true;
+                        cout << "Employee Found!\n" << endl;
+                        e[i].print_info();
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    cout << "Employee Not Found" << endl;
+                }
+
+                cout << "\nEnter 0 to Main Menu or 4 to exit: " << endl;
+                cin >> menu_index;
+                break;
+
             default:
                 run = false;
+                menu_index = 0;
                 cout << "\n\nExiting the program..." << endl;
                 break;
         }
