@@ -4,18 +4,8 @@
 #include <cstdlib>
 
 using namespace std;
-struct Date;
-void clear_screen();
-void print_date(Date);
-class Employee;
-class EmployeeId;
-class EmployeeProfile;
 
-int main()
-{
-    return 0;
-}
-
+// structs
 struct Date
 {
     int day;
@@ -23,18 +13,12 @@ struct Date
     int year;
 };
 
-// clearing terminal 
-void clear_screen()
-{
-    system("cls");
-}
+// helper function
+void clear_screen();
+void print_date(Date);
+void print_title(string);
 
-// helper function to print a date 
-void print_date(Date date)
-{
-    cout << date.day << "/" << date.month << "/" << date.year << std::endl;
-}
-
+// classes
 class EmployeeIdentity
 {
     private:
@@ -71,7 +55,7 @@ class EmployeeIdentity
 };  
 
 class EmployeeProfile
-{
+{   
     private:
         string department;
         long salary;
@@ -156,6 +140,8 @@ class EmployeeProfile
 class Employee
 {
     private:
+        static int employee_count;
+        static int max_size;
         string name;
         int age;
         EmployeeIdentity emp_id;
@@ -167,6 +153,8 @@ class Employee
             
         }
 
+        // default constructor
+        Employee(){};
         // getter methods 
         string get_name()
         {
@@ -234,3 +222,97 @@ class Employee
             emp_profile.set_job_title(job);
         }
 };
+
+int Employee::employee_count = 0;
+int Employee::max_size = 20;
+
+
+int main()
+{
+    int menu_index = 0;
+    bool run  = true;
+
+    while (run)
+    {
+        string tname;
+        int tage;
+        int tempid;
+        int d, m, y;
+        Date tempdate;
+        string tdep;
+        long tsalary;
+        string title;
+
+        switch(menu_index)
+        {
+            case 0:
+                clear_screen();
+                print_title("Employee Management System");
+                cout << "1. Add Employee" << endl;
+                cout << "2. Update Employee Information" << endl;
+                cout << "3. Find Employee Information" << endl;
+                cout << "4. Exit" << endl;
+                cout << "Enter your choice(Any other key to quit): ";
+                cin >> menu_index;
+                break;
+            case 1:
+
+                clear_screen();
+                print_title("Adding Employee Information");
+                cout << "Enter Employee Name: ";
+                cin >> tname;
+                cout << "Enter Employee Age: ";
+                cin >> tage;
+                cout << "Enter Employee Id: ";
+                cin >> tempid;
+                cout << "Enter Date of Hire (Format-> dd mm yy): ";
+                cin >> d;
+                cin >> m;
+                cin >> y;
+                tempdate = {d, m, y};
+                cout << "Enter the Department: ";
+                cin >> tdep;
+                cout << "Enter the Job Title: ";
+                cin >> title;
+                cout << "Enter the salary: ";
+                cin >> tsalary;
+                break;
+            default:
+                run = false;
+                cout << "\n\nExiting the program..." << endl;
+                break;
+        }
+    }
+    return 0;
+}
+
+// ACTUAL DEFINITIONS
+// clearing terminal 
+void clear_screen()
+{
+    system("cls");
+}
+
+// helper function to print a date 
+void print_date(Date date)
+{
+    cout << date.day << "/" << date.month << "/" << date.year << std::endl;
+}
+
+// title printing
+void print_title(string title)
+{
+    int n = 5;
+    for (int i = 0; i < n; i++)
+    {
+        cout << "-";
+    }
+    cout << title;
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "-";
+    }
+    cout << endl;
+}
+
