@@ -81,9 +81,9 @@ class EmployeeProfile
         }
 
         // getter methods 
-        long get_salary() {return salary;}
-        string get_department() {return department;}
-        string get_job_title() {return job_title;}
+        long get_salary() const {return salary;}
+        string get_department() const {return department;}
+        string get_job_title() const {return job_title;}
 
         // setter methods
         void set_salary(long sal)
@@ -129,13 +129,13 @@ class Employee
 
 
         // getter methods 
-        string get_name() {return name;}
-        int get_age() {return age;}
-        int get_employee_id() {return emp_id.get_employee_id();}
-        Date get_date_of_hire() {return emp_id.get_date_of_hire();}
-        string get_department() {return emp_profile.get_department();}
-        long get_salary() {return emp_profile.get_salary();}
-        string get_job_title() {return emp_profile.get_job_title();}
+        string get_name() const {return name;}
+        int get_age() const {return age;}
+        int get_employee_id() const {return emp_id.get_employee_id();}
+        Date get_date_of_hire() const  {return emp_id.get_date_of_hire();}
+        string get_department() const  {return emp_profile.get_department();}
+        long get_salary() const {return emp_profile.get_salary();}
+        string get_job_title() const{return emp_profile.get_job_title();}
         static int get_count() {return count;}
 
         // setter methods
@@ -167,7 +167,7 @@ class Employee
         }
 
         // printing information
-        void print_info()
+        void print_info() const
         {
             cout << "Name: " << name << endl;
             cout << "Age: " << age << endl;
