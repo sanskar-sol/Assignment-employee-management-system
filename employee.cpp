@@ -117,7 +117,6 @@ class Employee
 {
     private:
         static int count;
-        static const int max_size;
         string name;
         int age;
         EmployeeIdentity emp_id;
@@ -212,6 +211,7 @@ int main()
                 cout << "Enter your choice(Any other key to quit): ";
                 cin >> menu_index;
                 break;
+
             case 1:
             {
                 clear_screen();
@@ -239,6 +239,8 @@ int main()
                 cout << "Enter the salary: ";
                 cin >> tsalary;
                 EmployeeProfile temp_profile(tdep, tsalary, title);
+
+                // employee temporary
                 Employee temp_emp(tname, tage, temp_id, temp_profile);
                 
                 e[temp_count] = temp_emp;
@@ -248,6 +250,7 @@ int main()
                 cin >> menu_index;
                 break;
             }
+
             case 2:
                 clear_screen();
                 print_title("Salary Management");
@@ -277,6 +280,7 @@ int main()
                 cout << "\nEnter 0 to Main Menu or 4 to exit: " << endl;
                 cin >> menu_index;
                 break;
+
             case 3:
                 clear_screen();
                 print_title("Print Employee Information");
@@ -323,7 +327,7 @@ void clear_screen()
 // helper function to print a date 
 void print_date(Date date)
 {
-    cout << date.day << "/" << date.month << "/" << date.year << std::endl;
+    cout << date.day << "/" << date.month << "/" << date.year << endl;
 }
 
 // title printing
