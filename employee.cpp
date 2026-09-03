@@ -119,6 +119,7 @@ class Employee
         static int count;
         string name;
         int age;
+        mutable int access_count = 0;
         EmployeeIdentity emp_id;
         EmployeeProfile emp_profile;
     public:
@@ -135,6 +136,7 @@ class Employee
         string get_department() const  {return emp_profile.get_department();}
         long get_salary() const {return emp_profile.get_salary();}
         string get_job_title() const{return emp_profile.get_job_title();}
+        int get_access_count() const {return access_count;}
         static int get_count() {return count;}
 
         // setter methods
@@ -173,6 +175,7 @@ class Employee
             cout << "Salary: " << this->get_salary() << endl;
             cout << "Department: " << this->get_department() << endl;
             cout << "Job_Title: " << this->get_job_title() << endl;
+            access_count++;
         }
 };
 
